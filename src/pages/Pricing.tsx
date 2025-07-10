@@ -13,7 +13,9 @@ const Pricing = () => {
   const plans = [
     {
       name: t('pricing.starter'),
-      price: '75,000',
+      price: '82,500',
+      originalPrice: '150,000',
+      discount: '45%',
       period: 'One-time setup',
       description: 'Perfect for small schools with basic needs',
       features: [
@@ -39,7 +41,9 @@ const Pricing = () => {
     },
     {
       name: t('pricing.pro'),
-      price: '125,000',
+      price: '227,500',
+      originalPrice: '350,000',
+      discount: '35%',
       period: 'One-time setup',
       description: 'Most popular choice for growing schools',
       features: [
@@ -65,8 +69,10 @@ const Pricing = () => {
     },
     {
       name: t('pricing.enterprise'),
-      price: '200,000+',
-      period: 'Custom pricing',
+      price: '420,000',
+      originalPrice: '600,000',
+      discount: '30%',
+      period: 'One-time setup',
       description: 'Complete solution for large institutions',
       features: [
         'Everything in Pro',
@@ -141,7 +147,17 @@ const Pricing = () => {
                     {plan.name}
                   </CardTitle>
                   <div className="mb-4">
-                    <span className="text-4xl font-bold text-gray-900">{t('pricing.etb')} {plan.price}</span>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-4xl font-bold text-gray-900">{t('pricing.etb')} {plan.price}</span>
+                      {plan.originalPrice && (
+                        <div className="flex flex-col items-start">
+                          <span className="text-lg text-gray-500 line-through">{t('pricing.etb')} {plan.originalPrice}</span>
+                          <span className="text-sm bg-ethiopian-green text-white px-2 py-1 rounded-full font-medium">
+                            {plan.discount} OFF
+                          </span>
+                        </div>
+                      )}
+                    </div>
                     <p className="text-gray-600 mt-1">{plan.period}</p>
                   </div>
                   <p className="text-gray-600">{plan.description}</p>
