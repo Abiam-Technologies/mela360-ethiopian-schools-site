@@ -20,23 +20,27 @@ const ROICalculator = () => {
     printingCost: 40000,
     currentCollectionRate: 65,
     communicationCost: 15000,
+    avgAnnualFeesPerStudent: 1000,
     selectedPackage: 'starter'
   });
 
   const [showResults, setShowResults] = useState(false);
 
   const packagePrices = {
-    starter: 75000,
-    pro: 125000,
-    enterprise: 200000
+    starter: 82500,
+    pro: 227500,
+    enterprise: 420000
   };
 
   const calculateROI = () => {
-    const annualFeeTotal = inputs.students * 1000; // ETB 1000 per student average
+    const annualFeeTotal = inputs.students * inputs.avgAnnualFeesPerStudent; // Use actual input
     const newCollectionRate = 98; // Mela360° target
     
     // Fee Collection Gain
     const feeCollectionGain = (newCollectionRate - inputs.currentCollectionRate) / 100 * annualFeeTotal;
+    
+    // Current losses calculation
+    const currentLosses = inputs.printingCost + ((inputs.currentCollectionRate < 98) ? (98 - inputs.currentCollectionRate) / 100 * annualFeeTotal : 0);
     
     // Admin Time Savings (75 hours/month saved per admin staff)
     const hoursPerMonth = 75;
@@ -69,7 +73,8 @@ const ROICalculator = () => {
       netSavings,
       roiPercentage,
       paybackMonths,
-      hoursPerMonth: inputs.adminStaff * hoursPerMonth
+      hoursPerMonth: inputs.adminStaff * hoursPerMonth,
+      currentLosses
     };
   };
 
@@ -178,6 +183,16 @@ const ROICalculator = () => {
                   />
                 </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="avgAnnualFeesPerStudent">Average Annual Fees per Student (ETB)</Label>
+                  <Input
+                    id="avgAnnualFeesPerStudent"
+                    type="number"
+                    value={inputs.avgAnnualFeesPerStudent}
+                    onChange={(e) => setInputs({...inputs, avgAnnualFeesPerStudent: parseInt(e.target.value) || 0})}
+                  />
+                </div>
+
                 <div className="space-y-3">
                   <Label>Current Fee Collection Rate: {inputs.currentCollectionRate}%</Label>
                   <Slider
@@ -201,9 +216,9 @@ const ROICalculator = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="starter">Starter - ETB 75,000</SelectItem>
-                      <SelectItem value="pro">Pro - ETB 125,000</SelectItem>
-                      <SelectItem value="enterprise">Enterprise - ETB 200,000+</SelectItem>
+                      <SelectItem value="starter">Starter - ETB 82,500 (45% off ETB 150,000)</SelectItem>
+                      <SelectItem value="pro">Pro - ETB 227,500 (35% off ETB 350,000)</SelectItem>
+                      <SelectItem value="enterprise">Enterprise - ETB 420,000 (30% off ETB 600,000)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -322,6 +337,23 @@ const ROICalculator = () => {
                   </CardContent>
                 </Card>
 
+                {/* Analysis Message */}
+                <Card className="bg-muted border-ethiopian-yellow">
+                  <CardContent className="pt-6">
+                    <div className="text-center mb-4">
+                      <p className="text-lg mb-2">
+                        <strong>Based on your current fee collection and printing costs, you're losing over ETB {results.currentLosses.toLocaleString()} per year.</strong>
+                      </p>
+                      <p className="text-lg mb-4">
+                        With Mela360°, you break even in <strong>{results.paybackMonths.toFixed(1)} months</strong> and continue saving every term.
+                      </p>
+                      <p className="text-sm text-muted-foreground italic">
+                        NOTE: These calculations are estimates based on average results from Mela360° pilot schools. Your actual savings may vary.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* CTA */}
                 <Card className="bg-ethiopian-green text-white">
                   <CardContent className="pt-6 text-center">
@@ -331,9 +363,14 @@ const ROICalculator = () => {
                     <p className="mb-4 opacity-90">
                       Start your digital transformation journey with Mela360°
                     </p>
-                    <Button variant="secondary" size="lg" className="bg-white text-ethiopian-green hover:bg-gray-100">
-                      Book Your Free Demo
-                    </Button>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button variant="secondary" size="lg" className="bg-white text-ethiopian-green hover:bg-gray-100">
+                        Book Your Free Demo
+                      </Button>
+                      <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-ethiopian-green">
+                        Download Detailed ROI Report
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
