@@ -13,10 +13,11 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-ethiopian-green to-ethiopian-yellow rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <span className="text-xl font-bold">Mela360°</span>
+              <img 
+                src="/lovable-uploads/0879dca8-451d-43af-a226-ccbfd2e81073.png" 
+                alt="Mela360°" 
+                className="h-8 w-auto"
+              />
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               Complete school management software built specifically for Ethiopian schools. 
@@ -25,15 +26,23 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-ethiopian-yellow" />
-                <span className="text-sm text-gray-300">Addis Ababa, Ethiopia</span>
+                <span className="text-sm text-gray-300">Hayahulet, 3rd Floor, 24 Building, Addis Ababa, Ethiopia</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-ethiopian-yellow" />
-                <span className="text-sm text-gray-300">+251 911 123 456</span>
+                <span className="text-sm text-gray-300">+251 941 91 9514</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-ethiopian-yellow" />
+                <span className="text-sm text-gray-300">+251 932 99 4194</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-ethiopian-yellow" />
-                <span className="text-sm text-gray-300">info@mela360.et</span>
+                <span className="text-sm text-gray-300">info@abiam.net (Sales)</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-ethiopian-yellow" />
+                <span className="text-sm text-gray-300">support@abiam.net (Support)</span>
               </div>
             </div>
           </div>
@@ -55,8 +64,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
               <li><Link to="/roi-calculator" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">ROI Calculator</Link></li>
+              <li><Link to="/pricing" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">Price calculator</Link></li>
               <li><a href="#" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">Documentation</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">Support</a></li>
               <li><a href="#" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">Training</a></li>
               <li><a href="#" className="text-gray-300 hover:text-ethiopian-yellow transition-colors">API</a></li>
             </ul>

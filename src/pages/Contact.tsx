@@ -245,33 +245,33 @@ const Contact = () => {
                   </div>
 
                   {/* Instant Messaging */}
-                  <div className="space-y-3">
-                    <h4 className="font-semibold">Instant Messaging</h4>
-                    <div className="space-y-3">
-                      <a 
-                        href="https://wa.me/251941919514" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="w-full"
-                      >
-                        <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-                          <MessageCircle className="w-4 h-4 mr-2" />
-                          Chat on WhatsApp
-                        </Button>
-                      </a>
-                      <a 
-                        href="https://t.me/mela360support" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="w-full"
-                      >
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                          <MessageCircle className="w-4 h-4 mr-2" />
-                          Message us on Telegram
-                        </Button>
-                      </a>
-                    </div>
-                  </div>
+                   <div className="space-y-3">
+                     <h4 className="font-semibold">Instant Messaging</h4>
+                     <div className="space-y-6">
+                       <a 
+                         href="https://wa.me/251941919514" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="w-full"
+                       >
+                         <Button className="w-full bg-green-600 hover:bg-green-700 text-white py-3">
+                           <MessageCircle className="w-4 h-4 mr-2" />
+                           Chat on WhatsApp
+                         </Button>
+                       </a>
+                       <a 
+                         href="https://t.me/mela360support" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="w-full"
+                       >
+                         <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
+                           <MessageCircle className="w-4 h-4 mr-2" />
+                           Message us on Telegram
+                         </Button>
+                       </a>
+                     </div>
+                   </div>
 
                   {/* Office Address */}
                   <div className="space-y-3">
@@ -307,31 +307,6 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* FAQ Section */}
-          <div className="max-w-4xl mx-auto mt-16">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-ethiopian-green" />
-                  Frequently Asked Questions
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {faqs.map((faq, index) => (
-                    <div key={index} className="border-b border-border pb-4 last:border-b-0">
-                      <h4 className="font-semibold text-foreground mb-2">
-                        Q: {faq.question}
-                      </h4>
-                      <p className="text-muted-foreground">
-                        A: {faq.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
       <Footer />

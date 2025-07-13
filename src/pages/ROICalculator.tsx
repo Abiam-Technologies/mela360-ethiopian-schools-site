@@ -2,6 +2,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -341,12 +342,6 @@ const ROICalculator = () => {
                 <Card className="bg-muted border-ethiopian-yellow">
                   <CardContent className="pt-6">
                     <div className="text-center mb-4">
-                      <p className="text-lg mb-2">
-                        <strong>Based on your current fee collection and printing costs, you're losing over ETB {results.currentLosses.toLocaleString()} per year.</strong>
-                      </p>
-                      <p className="text-lg mb-4">
-                        With Mela360°, you break even in <strong>{results.paybackMonths.toFixed(1)} months</strong> and continue saving every term.
-                      </p>
                       <p className="text-sm text-muted-foreground italic">
                         NOTE: These calculations are estimates based on average results from Mela360° pilot schools. Your actual savings may vary.
                       </p>
@@ -364,10 +359,69 @@ const ROICalculator = () => {
                       Start your digital transformation journey with Mela360°
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <Button variant="secondary" size="lg" className="bg-white text-ethiopian-green hover:bg-gray-100">
-                        Book Your Free Demo
+                      <Button asChild variant="secondary" size="lg" className="bg-white text-ethiopian-green hover:bg-gray-100">
+                        <Link to="/contact">Book Your Free Demo</Link>
                       </Button>
-                      <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-ethiopian-green">
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="border-white text-white hover:bg-white hover:text-ethiopian-green"
+                        onClick={() => {
+                          const reportData = {
+                            totalStudents: inputs.students,
+                            adminStaff: inputs.adminStaff,
+                            teacherCount: inputs.teachers,
+                            avgSalary: inputs.avgSalary,
+                            currentPrintingCost: inputs.printingCost,
+                            currentCollectionRate: inputs.currentCollectionRate,
+                            avgAnnualFees: inputs.avgAnnualFeesPerStudent,
+                            selectedPackage: inputs.selectedPackage,
+                            packageCost: packagePrices[inputs.selectedPackage as keyof typeof packagePrices],
+                            totalSavings: results.totalSavings,
+                            paybackMonths: results.paybackMonths,
+                            roi: results.roiPercentage,
+                            calculatedDate: new Date().toLocaleDateString()
+                          };
+                          
+                          const reportContent = `Mela360° ROI Calculation Report
+Generated on: ${reportData.calculatedDate}
+
+School Information:
+- Total Students: ${reportData.totalStudents}
+- Admin Staff: ${reportData.adminStaff}
+- Teachers: ${reportData.teacherCount}
+- Average Monthly Salary: ETB ${reportData.avgSalary.toLocaleString()}
+- Annual Printing Costs: ETB ${reportData.currentPrintingCost.toLocaleString()}
+- Current Fee Collection Rate: ${reportData.currentCollectionRate}%
+- Average Annual Fees per Student: ETB ${reportData.avgAnnualFees.toLocaleString()}
+
+Mela360° Package:
+- Selected Package: ${reportData.selectedPackage}
+- Package Cost: ETB ${reportData.packageCost.toLocaleString()}
+
+Financial Benefits:
+- Total Annual Savings: ETB ${reportData.totalSavings.toLocaleString()}
+- Return on Investment: ${reportData.roi.toFixed(1)}%
+- Payback Period: ${reportData.paybackMonths.toFixed(1)} months
+
+This report shows the estimated financial benefits of implementing Mela360° for your school.
+These calculations are estimates based on average results from Mela360° pilot schools.
+
+For a personalized demo and detailed consultation, contact us at:
+Phone: +251 941 91 9514 | +251 932 99 4194
+Email: info@abiam.net`;
+                          
+                          const blob = new Blob([reportContent], { type: 'text/plain' });
+                          const url = window.URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = `Mela360-ROI-Report-${new Date().toISOString().split('T')[0]}.txt`;
+                          document.body.appendChild(a);
+                          a.click();
+                          document.body.removeChild(a);
+                          window.URL.revokeObjectURL(url);
+                        }}
+                      >
                         Download Detailed ROI Report
                       </Button>
                     </div>

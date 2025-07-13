@@ -67,7 +67,7 @@ const Index = () => {
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               {t('hero.description')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button asChild size="lg" className="bg-ethiopian-green hover:bg-ethiopian-green/90 text-white px-8">
                 <Link to="/contact">
                   {t('hero.cta')} <ArrowRight className="ml-2 w-5 h-5" />
@@ -78,6 +78,15 @@ const Index = () => {
                   {t('hero.secondary_cta')}
                 </Link>
               </Button>
+            </div>
+            
+            {/* Dashboard Preview */}
+            <div className="mt-12 max-w-5xl mx-auto">
+              <img 
+                src="/lovable-uploads/ee355c4b-e74e-460b-96c2-3bd2bb5edf8a.png" 
+                alt="Mela360° Dashboard Preview" 
+                className="w-full h-auto rounded-2xl shadow-2xl border border-gray-200"
+              />
             </div>
           </div>
         </div>

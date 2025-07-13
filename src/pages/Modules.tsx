@@ -24,7 +24,8 @@ import {
   MessageCircle,
   FileCheck,
   Monitor,
-  UserPlus
+  UserPlus,
+  CheckCircle
 } from "lucide-react";
 
 const Modules = () => {
@@ -248,6 +249,48 @@ const Modules = () => {
                   </Card>
                 );
               })}
+            </div>
+          </div>
+
+          {/* More Features Section */}
+          <div className="mt-20 bg-white rounded-3xl p-8 md:p-12 border-2 border-gray-100">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                More Features Has Mela360°
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                It's vast! Mela360° has more additional features that you'll expect in a complete solution.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                'Optimized Performance',
+                'One Click Update System', 
+                'Supports RESTful APIs',
+                'Clean Code Quality',
+                'Installation Wizard',
+                'Multi Lingual',
+                'Fully Responsive',
+                'Supports Right-to-Left',
+                'Themes & Colors Styling Options',
+                'Email Notification with Templates',
+                'Supports SMS Notification',
+                'Printable Reports',
+                'Inbuilt Backup Tool',
+                'IP Filter & Block',
+                'Activity & Email Log',
+                'Export Reports'
+              ].map((feature, index) => (
+                <Card key={index} className="border-2 border-gray-100 hover:border-ethiopian-green/20 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-ethiopian-green flex-shrink-0" />
+                      <span className="text-foreground font-medium">{feature}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
 
