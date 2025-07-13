@@ -41,7 +41,7 @@ const Navigation = () => {
             <img 
               src="/lovable-uploads/d1459b3c-1a8f-4f08-87d1-82be7bdbb63d.png" 
               alt="Mela360°" 
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </Link>
 
