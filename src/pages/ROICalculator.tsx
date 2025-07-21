@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
+import jsPDF from 'jspdf';
 
 const ROICalculator = () => {
   const [inputs, setInputs] = useState({
@@ -365,7 +366,7 @@ const ROICalculator = () => {
                       <Button 
                         variant="outline" 
                         size="lg" 
-                        className="border-white text-white hover:bg-white hover:text-ethiopian-green"
+                        className="border-white text-black hover:bg-white hover:text-ethiopian-green"
                         onClick={() => {
                           const reportData = {
                             totalStudents: inputs.students,
@@ -383,43 +384,68 @@ const ROICalculator = () => {
                             calculatedDate: new Date().toLocaleDateString()
                           };
                           
-                          const reportContent = `Mela360° ROI Calculation Report
-Generated on: ${reportData.calculatedDate}
-
-School Information:
-- Total Students: ${reportData.totalStudents}
-- Admin Staff: ${reportData.adminStaff}
-- Teachers: ${reportData.teacherCount}
-- Average Monthly Salary: ETB ${reportData.avgSalary.toLocaleString()}
-- Annual Printing Costs: ETB ${reportData.currentPrintingCost.toLocaleString()}
-- Current Fee Collection Rate: ${reportData.currentCollectionRate}%
-- Average Annual Fees per Student: ETB ${reportData.avgAnnualFees.toLocaleString()}
-
-Mela360° Package:
-- Selected Package: ${reportData.selectedPackage}
-- Package Cost: ETB ${reportData.packageCost.toLocaleString()}
-
-Financial Benefits:
-- Total Annual Savings: ETB ${reportData.totalSavings.toLocaleString()}
-- Return on Investment: ${reportData.roi.toFixed(1)}%
-- Payback Period: ${reportData.paybackMonths.toFixed(1)} months
-
-This report shows the estimated financial benefits of implementing Mela360° for your school.
-These calculations are estimates based on average results from Mela360° pilot schools.
-
-For a personalized demo and detailed consultation, contact us at:
-Phone: +251 941 91 9514 | +251 932 99 4194
-Email: info@abiam.net`;
+                          // Generate PDF using jsPDF
+                          const pdf = new jsPDF();
                           
-                          const blob = new Blob([reportContent], { type: 'text/plain' });
-                          const url = window.URL.createObjectURL(blob);
-                          const a = document.createElement('a');
-                          a.href = url;
-                          a.download = `Mela360-ROI-Report-${new Date().toISOString().split('T')[0]}.txt`;
-                          document.body.appendChild(a);
-                          a.click();
-                          document.body.removeChild(a);
-                          window.URL.revokeObjectURL(url);
+                          // Set font and title
+                          pdf.setFontSize(18);
+                          pdf.setFont('helvetica', 'bold');
+                          pdf.text('Mela360° ROI Calculation Report', 20, 20);
+                          
+                          pdf.setFontSize(10);
+                          pdf.setFont('helvetica', 'normal');
+                          pdf.text(`Generated on: ${reportData.calculatedDate}`, 20, 35);
+                          
+                          // School Information Section
+                          pdf.setFontSize(14);
+                          pdf.setFont('helvetica', 'bold');
+                          pdf.text('School Information:', 20, 55);
+                          
+                          pdf.setFontSize(10);
+                          pdf.setFont('helvetica', 'normal');
+                          pdf.text(`Total Students: ${reportData.totalStudents}`, 25, 70);
+                          pdf.text(`Admin Staff: ${reportData.adminStaff}`, 25, 80);
+                          pdf.text(`Teachers: ${reportData.teacherCount}`, 25, 90);
+                          pdf.text(`Average Monthly Salary: ETB ${reportData.avgSalary.toLocaleString()}`, 25, 100);
+                          pdf.text(`Annual Printing Costs: ETB ${reportData.currentPrintingCost.toLocaleString()}`, 25, 110);
+                          pdf.text(`Current Fee Collection Rate: ${reportData.currentCollectionRate}%`, 25, 120);
+                          pdf.text(`Average Annual Fees per Student: ETB ${reportData.avgAnnualFees.toLocaleString()}`, 25, 130);
+                          
+                          // Mela360° Package Section
+                          pdf.setFontSize(14);
+                          pdf.setFont('helvetica', 'bold');
+                          pdf.text('Mela360° Package:', 20, 150);
+                          
+                          pdf.setFontSize(10);
+                          pdf.setFont('helvetica', 'normal');
+                          pdf.text(`Selected Package: ${reportData.selectedPackage.charAt(0).toUpperCase() + reportData.selectedPackage.slice(1)}`, 25, 165);
+                          pdf.text(`Package Cost: ETB ${reportData.packageCost.toLocaleString()}`, 25, 175);
+                          
+                          // Financial Benefits Section
+                          pdf.setFontSize(14);
+                          pdf.setFont('helvetica', 'bold');
+                          pdf.text('Financial Benefits:', 20, 195);
+                          
+                          pdf.setFontSize(10);
+                          pdf.setFont('helvetica', 'normal');
+                          pdf.text(`Total Annual Savings: ETB ${reportData.totalSavings.toLocaleString()}`, 25, 210);
+                          pdf.text(`Return on Investment: ${reportData.roi.toFixed(1)}%`, 25, 220);
+                          pdf.text(`Payback Period: ${reportData.paybackMonths.toFixed(1)} months`, 25, 230);
+                          
+                          // Disclaimer and Contact
+                          pdf.setFontSize(10);
+                          pdf.setFont('helvetica', 'italic');
+                          pdf.text('This report shows the estimated financial benefits of implementing Mela360° for your school.', 20, 250);
+                          pdf.text('These calculations are estimates based on average results from Mela360° pilot schools.', 20, 260);
+                          
+                          pdf.setFont('helvetica', 'bold');
+                          pdf.text('For a personalized demo and detailed consultation, contact us at:', 20, 280);
+                          pdf.setFont('helvetica', 'normal');
+                          pdf.text('Phone: +251 941 91 9514 | +251 932 99 4194', 20, 290);
+                          pdf.text('Email: info@abiam.net', 20, 300);
+                          
+                          // Save the PDF
+                          pdf.save(`Mela360-ROI-Report-${new Date().toISOString().split('T')[0]}.pdf`);
                         }}
                       >
                         Download Detailed ROI Report
