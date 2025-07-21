@@ -8,8 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MessageCircle, MapPin, Clock, Users, HelpCircle, Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     helpType: "demo",
     fullName: "",
@@ -23,17 +26,67 @@ const Contact = () => {
   });
 
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleHelpTypeChange = (value: string) => {
     setFormData({ ...formData, helpType: value });
     setShowAdditionalFields(value === "quote");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! We'll get back to you within one business day.");
+    setIsSubmitting(true);
+
+    try {
+      const submissionData = {
+        help_type: formData.helpType,
+        full_name: formData.fullName,
+        role: formData.role,
+        school_name: formData.schoolName,
+        phone_number: formData.phoneNumber,
+        email: formData.email,
+        message: formData.message || null,
+        number_of_students: formData.numberOfStudents ? parseInt(formData.numberOfStudents) : null,
+        package_interest: formData.packageInterest || null,
+      };
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([submissionData]);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for your message! We'll get back to you within one business day.",
+      });
+
+      // Reset form
+      setFormData({
+        helpType: "demo",
+        fullName: "",
+        role: "",
+        schoolName: "",
+        phoneNumber: "",
+        email: "",
+        message: "",
+        numberOfStudents: "",
+        packageInterest: ""
+      });
+      setShowAdditionalFields(false);
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error",
+        description: "There was an error sending your message. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqs = [
@@ -195,8 +248,9 @@ const Contact = () => {
                     type="submit" 
                     size="lg" 
                     className="w-full bg-ethiopian-green hover:bg-ethiopian-green/90"
+                    disabled={isSubmitting}
                   >
-                    Submit Request
+                    {isSubmitting ? "Submitting..." : "Submit Request"}
                   </Button>
                 </form>
               </CardContent>

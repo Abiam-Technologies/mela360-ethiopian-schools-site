@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          help_type: string
+          id: string
+          message: string | null
+          number_of_students: number | null
+          package_interest: string | null
+          phone_number: string
+          role: string
+          school_name: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          help_type: string
+          id?: string
+          message?: string | null
+          number_of_students?: number | null
+          package_interest?: string | null
+          phone_number: string
+          role: string
+          school_name: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          help_type?: string
+          id?: string
+          message?: string | null
+          number_of_students?: number | null
+          package_interest?: string | null
+          phone_number?: string
+          role?: string
+          school_name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       mela360: {
         Row: {
           created_at: string
