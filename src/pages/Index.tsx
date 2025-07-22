@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { SummerDiscountModal } from '@/components/SummerDiscountModal';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -197,6 +198,9 @@ const Index = () => {
       </section>
 
       <Footer />
+      
+      {/* Summer Discount Modal */}
+      <SummerDiscountModal />
     </div>
   );
 };
